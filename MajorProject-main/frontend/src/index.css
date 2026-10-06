@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-cyan: #06b6d4;
+  --neon-magenta: #d946ef;
+  --neon-blue: #3b82f6;
+  --bg-deep: #020617;
+  --bg-card: rgba(15, 23, 42, 0.6);
+}
+
+@layer base {
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #020617;
+    /* Fallback for var(--bg-deep) */
+  }
+
+  body {
+    @apply font-sans antialiased text-slate-100;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-deep);
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(6, 182, 212, 0.15), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.15), transparent 25%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl;
+    box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.1);
+  }
+
+  /* Holographic Card */
+  .card-holographic {
+    @apply relative overflow-hidden bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 transition-all duration-300;
+  }
+
+  .card-holographic::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 45%, rgba(6, 182, 212, 0.2) 50%, rgba(255, 255, 255, 0.1) 55%, transparent 60%);
+    background-size: 200% 200%;
+  }
+
+  .card-holographic:hover {
+    @apply border-cyan-500/30 transform -translate-y-1 shadow-lg shadow-cyan-500/20;
+  }
+
+  .card-holographic:hover::before {
+    @apply opacity-100;
+    animation: holograph 1.5s infinite linear;
+  }
+
+  /* Cosmic Button */
+  .btn-cosmic {
+    @apply relative overflow-hidden bg-transparent text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 bg-slate-900 border border-cyan-500/50;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+  }
+
+  .btn-cosmic:hover {
+    @apply border-cyan-400 bg-cyan-950/30;
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+  }
+
+  .btn-cosmic-secondary {
+    @apply relative overflow-hidden bg-slate-800/50 text-slate-300 font-medium py-3 px-6 rounded-xl transition-all duration-300 border border-white/10 hover:bg-slate-700/50 hover:text-white hover:border-white/30;
+  }
+
+  .input-field {
+    @apply bg-slate-950/80 border border-slate-700 text-white placeholder-slate-500 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300;
+  }
+
+  .input-field:focus {
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+  }
+
+  .text-neon {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500;
+    filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
+  }
+
+  .border-glow {
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.3), inset 0 0 10px rgba(6, 182, 212, 0.1);
+  }
+}
+
+/* Animations */
+@keyframes holograph {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Ambient Particles (via before/after on body) */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.02) 2px, transparent 2px);
+  background-size: 60px 60px, 120px 120px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#020617];
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #06b6d4, #3b82f6);
+  @apply rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0891b2, #2563eb);
+}
